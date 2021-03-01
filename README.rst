@@ -17,7 +17,7 @@ pl-sevstack
 Abstract
 --------
 
-A ChRIS plugin to produce ranked list of severity scores
+This app will be a plugin that will take a large number of severity reports from pl-covidnet and their corresponding image files and create a ranked list of the the most severe Covid patients, so that doctors can tend to the most vulnerable patients first.
 
 
 Description
@@ -83,8 +83,20 @@ You need you need to specify input and output directories using the `-v` flag to
 
     docker run --rm -u $(id -u)                             \
         -v $(pwd)/in:/incoming -v $(pwd)/out:/outgoing      \
-        fnndsc/pl-sevstack sevstack                        \
-        /incoming /outgoing
+        local/pl-sevstack sevstack                        \
+        /in /out
+
+.. code:: bash
+
+   docker run --rm -u $(id -u)				\ 
+	-v $(pwd)/sevstack:/usr/local/lib/python3.9/site-packages/sevstack:ro -v $(pwd)/in:/incoming -v $(pwd)/out:/outgoing	\ 
+	local/pl-sevstack sevstack			\ 
+	/in /out
+
+docker run --rm -u $(id -u) -ti                         \
+        -v $(pwd)/sevstack:/usr/local/lib/python3.9/site-packages/sevstack:ro -v $(pwd)/in:/incoming -v $(pwd)/out:/outgoing    \
+        local/pl-sevstack sevstack                      \
+        /in /out
 
 
 Development

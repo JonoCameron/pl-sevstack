@@ -126,6 +126,7 @@ class Sevstack(ChrisApp):
         """
         Define the code to be run by this plugin app.
         """
+        print("hello world!")
         print(Gstr_title)
         print('Version: %s' % self.get_version())
 
