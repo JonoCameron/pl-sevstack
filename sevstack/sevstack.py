@@ -9,7 +9,8 @@
 #
 
 from chrisapp.base import ChrisApp
-
+import os
+import numpy as np
 
 Gstr_title = """
                     _             _    
@@ -126,9 +127,34 @@ class Sevstack(ChrisApp):
         """
         Define the code to be run by this plugin app.
         """
-        print("hello world!")
+
         print(Gstr_title)
-        print('Version: %s' % self.get_version())
+        print('Version: %s\n\n\n\n' % self.get_version())
+
+        arr = np.array([])
+
+        with open ('{}/randomnumbers.txt'.format(options.inputdir)) as file:
+            for each in file:
+                each = each.rstrip("\n")
+                each = int(each)
+                arr = np.append(arr, each)
+        
+        file.close()
+
+        arr = np.sort(arr)
+        print(arr)
+
+    
+        file = open('{}/sortednumbers.txt'.format(options.outputdir), 'w')
+        file.writelines('hello\n')   
+        file.flush()
+            #for each in arr:
+            #    file.write(str(each))
+
+        file.close()
+
+        print('done')
+
 
     def show_man_page(self):
         """
