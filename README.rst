@@ -94,6 +94,7 @@ You need you need to specify input and output directories using the `-v` flag to
 	/incoming /outgoing
 
 ..code:: bash
+
 docker run --rm -u $(id -u) -ti                         \
         -v $(pwd)/sevstack:/usr/local/lib/python3.9/site-packages/sevstack:ro -v $(pwd)/in:/incoming -v $(pwd)/out:/outgoing    \
         local/pl-sevstack sevstack                      \
