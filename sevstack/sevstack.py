@@ -146,10 +146,8 @@ class Sevstack(ChrisApp):
 
     
         file = open('{}/sortednumbers.txt'.format(options.outputdir), 'w')
-        file.writelines('hello\n')   
-        file.flush()
-            #for each in arr:
-            #    file.write(str(each))
+        for each in arr:
+            file.write(str(each) + "\n")
 
         file.close()
 
