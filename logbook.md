@@ -323,4 +323,4 @@ I wasn't mapping inputs and outputs correctly in this command:
 
 `/in /out                                                                                                                 `      
 
-So volume mapping has to be specified as `<hostDir>:<containerDir>` otherwise it won't find the directory it wants outside of the container. The two directories in the last line have to match the directories in the second line.
+So volume mapping has to be specified as `<hostDir>:<containerDir>` otherwise the plugin won't find the directory it wants outside of the container. The two directories in the last line have to match the directories in the second line. i.e, here `/in` is the host machine directory and it is mapping into the container at `/incoming` and then `/outgoing` in the container is mapped to `/out` on the host machine
