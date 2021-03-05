@@ -301,6 +301,7 @@ Today I will make a plugin that takes an input file
 
 In the end, I managed to use python IO operations to read the file, and then used numpy to sort the numbers, after a bit of formatting(remove newlines, int(string), etc..) I could not work out how to output to the output directory, and this is something I'm going to follow up with the client on.
 
+
 # 4/3/21
 
 Today I will get a local instance of ChRIS backend running, so that I can test covidnet.sh.
@@ -324,3 +325,31 @@ I wasn't mapping inputs and outputs correctly in this command:
 `/in /out                                                                                                                 `      
 
 So volume mapping has to be specified as `<hostDir>:<containerDir>` otherwise the plugin won't find the directory it wants outside of the container. The two directories in the last line have to match the directories in the second line. i.e, here `/in` is the host machine directory and it is mapping into the container at `/incoming` and then `/outgoing` in the container is mapped to `/out` on the host machine
+
+## Back to ChRIS backend
+
+I started working from: https://github.com/FNNDSC/ChRIS_ui,
+with the instruction:
+
+`$ docker run --rm -it -v $(pwd):/home/localuser -p 3000:3000 -u $(id -u):$(id -g) --name chris_ui fnndsc/chris_ui:dev`
+
+This first pulls the docker image if it isn't found locally and then runs it at 
+
+`https://localhost:3000`
+
+But it doesn't do anything apart from be there and look good
+
+
+# 5/3/21
+
+Today I will continue on with the ChRIS_ultron_backend service. In my first terminal I did:
+
+`git clone https://github.com/FNNDSC/ChRIS_ultron_backend`
+
+`cd ChRIS_ultron_backend`
+
+`./unmake.sh ; sudo rm -fr FS ; rm -fr FS ; ./make.sh`
+
+In a second terminal I did:
+
+`
