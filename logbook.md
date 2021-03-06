@@ -383,6 +383,6 @@ Then run
 
 `./ChRIS_ultron_backend/postscript.sh`
 
-before `./covidnet.sh`
+before `./CHRIS_docs/workflows/covidnet.sh`
 
-
+Now if you go to localhost:3000 you will see a new feed called "COVIDNET_lung_CT_subjects" and if you click on that you'll be able to watch ChRIS work through that workflow.
