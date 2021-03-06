@@ -352,4 +352,37 @@ Today I will continue on with the ChRIS_ultron_backend service. In my first term
 
 In a second terminal I did:
 
-`
+`git clone https://github.com/FNNDSC/ChRIS_ui`
+
+`cd ChRIS_ui`
+
+`docker run --rm -ti -v $(pwd):/home/localuser -p 3000:3000 -u $(id -u):$(id -g) --name chris_ui fnndsc/chris_ui:dev`
+
+Then in a third terminal I ran:
+
+`cd ChRIS_ultron_backend`
+
+`./postscript.sh`
+
+Once these steps have been finished, go to localhost:3000 and check out the ChRIS ui. Log in with chris:chris1234.
+I added local files just to see it do something.
+
+## Solving issues with ./covidnet.sh failing to find plugin IDs
+
+Make sure to run the backend with
+
+`./unmake.sh ; sudo rm -fr FS; rm -fr FS; ./make.sh -U -I -i`
+
+The flags will help include the plugins that 
+
+`./covidnet.sh`
+
+Needs to run. But we also need to add those plugins to postscript.sh, so in the top list of plugins needed, add `pl-covidnet`, `pl-pdfgeneration`, `pl-lungct` and `pl-med2img`
+
+Then run
+
+`./ChRIS_ultron_backend/postscript.sh`
+
+before `./covidnet.sh`
+
+
