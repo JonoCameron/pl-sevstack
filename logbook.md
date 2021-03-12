@@ -254,9 +254,11 @@ Link it to a GitHub account that has the same repo name and do the following to 
 
 This will push your new app to GitHub. Next, push it to Dockerhub:
 
-`docker build -t jonocameron/pl-sevstack:0.2`
+`docker build -t jonocameron/pl-sevstack:[TAG] .`
 
-`docker push jonocameron/pl-sevstack:0.2`
+`docker tag local/pl-sevstack:[TAG] jonocameron/pl-sevstack:[TAG]`
+
+`docker push jonocameron/pl-sevstack:[TAG]`
 
 Then I made it a plugin on the ChRIS store:
 https://chrisstore.co/
@@ -375,7 +377,7 @@ Make sure to run the backend with
 
 The flags will help include the plugins that 
 
-`./covidnet.sh`
+`./covidnet.sh -a localhost`
 
 Needs to run. But we also need to add those plugins to postscript.sh, so in the top list of plugins needed, add `pl-covidnet`, `pl-pdfgeneration`, `pl-lungct` and `pl-med2img`
 
@@ -386,3 +388,35 @@ Then run
 before `./CHRIS_docs/workflows/covidnet.sh`
 
 Now if you go to localhost:3000 you will see a new feed called "COVIDNET_lung_CT_subjects" and if you click on that you'll be able to watch ChRIS work through that workflow.
+
+# 11/3/21
+
+## Adding my plugin, `pl-sevstack` to my local ChRIS environment.
+
+First I'm going to try adding 
+
+`local/pl-sevstack` to `postscript.sh` 
+
+Then I ran 
+
+`./postscript.sh`
+
+and that added `pl-sevstack` to my ChRIS instance. From there I was able to use the frontend to upload `randomnumbers.txt` as the root node of a workflow and run `pl-sevstack` on it, and obverse in the UI that the plugin had outputted `sortednumbers.txt`, the same way that the local instance ran.
+
+Now I will test running it from Dockerhub. I will do this by first pushing to Dockerhub, then replacing `local/pl-sevstack` with `jonocameron/pl-sevstack`
+
+`docker tag local/pl-sevstack:[TAG] jonocameron/pl-sevstack:[TAG]`
+
+`docker push jonocameron/pl-sevstack:0.7`
+
+Then I rebooted my ChRIS instance to make sure that the `local/pl-sevstack` wasn't being used. After completing this, I found that version 0.4 of my plugin was being pulled from dockerhub rather than the most recent 0.7. So now I will try and work out how to pull the most recent version of pl-sevstack.
+
+I'm going to try 
+
+`docker tag local/pl-sevstack:0.7 jonocameron/pl-sevstack:latest`
+
+`docker push jonocameron/pl-sevstack:latest`
+
+By tagging my most recent as the latest on dockerhub, I hope this will resolve my issue hard-coding version numbers into `postscript.sh`.
+
+That worked. However, I would not need to hack around it like that if the automatic builds worked between GitHub and Dockerhub. Why don't they work?? Because I am hard-coding a filename (`sortednumbers.txt`) into my plug-in, GitHub actions looks for a file of that name whilst building, which it subsequently fails on. Therefore to fix the automatic builds I need to make my plugin take any generic name and operate on that file.
