@@ -449,3 +449,16 @@ Once these tunnels were set up, I logged in to the machine with
 Then created a directory on the 'gondwanaland' machine for myself to work in.
 
 `ssh -g -f -N -X -p 7778 -L 2222:localhost:2222 chris@108.49.45.138 && ssh -g -f -N -X -p 7778 -L 3333:localhost:3333 chris@108.49.45.138 && ssh -g -f -N -X -p 7778 -L 8333:localhost:8333 chris@108.49.45.138`
+
+# 24/3/21
+
+## Restoring tunnels to Megalodon
+
+`ssh -g -f -N -X -L 2222:localhost:22 rudolphpienaar@192.168.1.216`
+
+`ssh -g -f -N -X -L 3333:localhost:3000 rudolphpienaar@192.168.1.216`
+
+`ssh -g -f -N -X -L 8333:localhost:8000 rudolphpienaar@192.168.1.216`
+
+## Testing pl-covidnet output
+

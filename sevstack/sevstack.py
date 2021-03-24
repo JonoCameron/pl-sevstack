@@ -122,6 +122,8 @@ class Sevstack(ChrisApp):
         Define the CLI arguments accepted by this plugin app.
         Use self.add_argument to specify a new app argument.
         """
+        #--inputfile
+        #--outputfile
 
     def run(self, options):
         """
