@@ -420,3 +420,32 @@ I'm going to try
 By tagging my most recent as the latest on dockerhub, I hope this will resolve my issue hard-coding version numbers into `postscript.sh`.
 
 That worked. However, I would not need to hack around it like that if the automatic builds worked between GitHub and Dockerhub. Why don't they work?? Because I am hard-coding a filename (`sortednumbers.txt`) into my plug-in, GitHub actions looks for a file of that name whilst building, which it subsequently fails on. Therefore to fix the automatic builds I need to make my plugin take any generic name and operate on that file.
+
+# 18/3/21
+
+I've been in quarantine since the 15th.
+
+Since losing my work laptop, our client set me up with a machine at his workplace, by setting up ssh tunnels. I logged it by:
+
+1. Setup an ssh tunnel for direct access:
+
+`ssh -g -f -N -X -p 7778 -L 2222:localhost:2222 chris@108.49.45.138`
+
+The 'chris' passwd is
+chris1234
+
+2. Setup another tunnel for the ChRIS UI:
+
+`ssh -g -f -N -X -p 7778 -L 3333:localhost:3333 chris@108.49.45.138`
+
+3. You will also need to setup another tunnel to get to the ChRIS backend
+
+`ssh -g -f -N -X -p 7778 -L 8333:localhost:8333 chris@108.49.45.138`
+
+Once these tunnels were set up, I logged in to the machine with
+
+`ssh -p 7778 chris@108.49.45.138`
+
+Then created a directory on the 'gondwanaland' machine for myself to work in.
+
+`ssh -g -f -N -X -p 7778 -L 2222:localhost:2222 chris@108.49.45.138 && ssh -g -f -N -X -p 7778 -L 3333:localhost:3333 chris@108.49.45.138 && ssh -g -f -N -X -p 7778 -L 8333:localhost:8333 chris@108.49.45.138`
