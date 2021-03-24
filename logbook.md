@@ -462,3 +462,8 @@ Then created a directory on the 'gondwanaland' machine for myself to work in.
 
 ## Testing pl-covidnet output
 
+Whilst figuring out the output of pl-covidnet I deleted a few lines from `FNNDSC/CHRIS_docs/workflows/covidnet.sh` to remove the pl-pdfgeneration part of the workflow. I did this so I could understand how the script was written and so I could see easily the output of pl-covidnet.
+
+Each sub-directory has input/output meta data that we don't care about, `sample.png` which the image file the machine learning algorithm works on and the `prediction-default.json`. If `prediction-default.json` has "covid" as the prediction, it also has a `severity.json`, which we will use to rank the patients.
+
+This means that we will be ranking patients on covid first and the pneumonia second.
