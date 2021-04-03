@@ -477,3 +477,55 @@ I started by getting a "hello world!" from it.
 After some research here: `https://github.com/FNNDSC/pl-tsdircopy`
 
 I will try creating some dummy input directories and copying them to a single output directory.
+
+
+# 30/3/21
+
+Login to Megalodon from Gondwanaland with 
+
+`ssh -p 22 chris@localhost`
+
+# 31/3/21
+
+Log in to Megalodon from local machine with
+
+`ssh -p 2222 chris@localhost`
+
+Today the goal is to get the to fix this problem:
+Today I added pl-topologicalcopy to the covidnet.sh workflow. I did this by editing the attached covidnet.sh file.
+
+pl-topologicalcopy is a plugin that allows us to collect the output directories of many ChRIS plugins and put them into one singular output directory that we can then work on. Think of a sink node pulling everything into one place.
+
+On lines 41-44 I linked the new plugin to the previous level of the workflow, and declared its variables (--previous_id=@prev_id)
+
+And on lines 573-577 I corrected the logic so that pl-topological had the correct input arguments so it could run.
+
+Then you can see here that result-->[pinst: 991] shows a successful running of pl-topologicalcopy, and this was verified by
+
+Where it says "status finishedSuccesfully"
+
+Unfortunately, I only managed to make it work for a single branch of the covidnet.sh workflow, so I have reached out to some members of my clients team to ask questions about whether the input "combined" on line 573 needs to be looped through to collect all branch outputs.
+
+See here that,
+
+
+A) the plugin has been added, and,
+
+B) the directory of the pl-topological plugin only has the output from the final branch, the branch that that node is linked to.
+
+# 2/4/21
+
+Changing the prev_id of pl-topologicalcopy to the last instance of pl-covidnet made the output of pl-topologicalcopy work, but since the outputs of pl-covidnet all have the same name, everything is overwritten. I'm going to need to edit the pl-covidnet to output a single directory with a unique identifying name. I think stamping the folder with a time stamp will be good, if I can't prefix the output with the plugin instance ID.
+
+# 3/4/21
+
+## Editing local/pl-covidnet to produce single, uniquely named output.
+
+I'm going to edit my local/pl-covidnet and add it to my local ChRIS instance to develop. This is instead of using the fnndsc/pl-covidnet version.
+
+1) Add something to local/pl-covidnet to reflect changes in terminal on ChRIS UI
+2) Change tcovidnet.sh to use local/pl-covidnet
+
+
+
+ 

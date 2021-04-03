@@ -7,7 +7,8 @@
 #              http://childrenshospital.org/FNNDSC/
 #                        dev@babyMRI.org
 #
-
+import sys
+from .inference import Inference
 from chrisapp.base import ChrisApp
 import os
 import numpy as np
@@ -122,38 +123,73 @@ class Sevstack(ChrisApp):
         Define the CLI arguments accepted by this plugin app.
         Use self.add_argument to specify a new app argument.
         """
-        #--inputfile
-        #--outputfile
+        self.add_argument('--metaname', 
+                    dest         = 'metaname', 
+                    type         = str, 
+                    optional     = True,
+                    help         = 'Name of ckpt meta file',
+                    default      = 'model.meta')
+        self.add_argument('--imagefile', 
+                    dest         = 'imagefile', 
+                    type         = str, 
+                    optional     = False,
+                    help         = 'Name of image file to infer from')
+        self.add_argument('--in_tensorname', 
+                    dest         = 'in_tensorname', 
+                    type         = str, 
+                    optional     = True,
+                    help         = 'Name of input tensor to graph',
+                    default      = 'input_1:0')
+        self.add_argument('--out_tensorname', 
+                    dest         = 'out_tensorname', 
+                    type         = str, 
+                    optional     = True,
+                    help         = 'Name of output tensor from graph',
+                    default      = 'norm_dense_1/Softmax:0')
+        self.add_argument('--input_size', 
+                    dest         = 'input_size', 
+                    type         = int, 
+                    optional     = True,
+                    help         = 'Size of input (ex: if 480x480, --input_size 480)',
+                    default      = 480)
+        self.add_argument('--top_percent', 
+                    dest         = 'top_percent', 
+                    type         = float, 
+                    optional     = True,
+                    help         = 'Percent top crop from top of image',
+                    default      = 0.08)
 
     def run(self, options):
         """
         Define the code to be run by this plugin app.
         """
-
+        # python covidnet.py inputimage output --imagefile ex-covid.jpeg
         print(Gstr_title)
-        print('Version: %s\n\n\n\n' % self.get_version())
-
-        arr = np.array([])
-
-        with open ('{}/randomnumbers.txt'.format(options.inputdir)) as file:
-            for each in file:
-                each = each.rstrip("\n")
-                each = int(each)
-                arr = np.append(arr, each)
-        
-        file.close()
-
-        arr = np.sort(arr)
-        print(arr)
-
-    
-        file = open('{}/sortednumbers.txt'.format(options.outputdir), 'w')
-        for each in arr:
-            file.write(str(each) + "\n")
-
-        file.close()
-
-        print('done')
+        print("Developing own pl-covidnet")
+        print('Version: %s' % self.get_version())
+        all_three_models = [
+            # {
+            #     'weightspath':'/models/COVIDNet-CXR3-A',
+            #     'ckptname':'model-2856',
+            #     'modelused':'modelA'
+            # }, 
+            {
+                'weightspath':'/usr/local/lib/covidnet/COVIDNet-CXR4-B',
+                'ckptname':'model-1545',
+                'modelused':'modelB'
+            },
+            # {
+            #     'weightspath': '/models/COVIDNet-CXR3-C',
+            #     'ckptname':'model-0',
+            #     'modelused':'modelC'
+            # }
+        ]
+        for model in all_three_models:
+            options.weightspath = model['weightspath']
+            options.ckptname = model['ckptname']
+            options.modelused = model['modelused']
+            infer_obj = Inference(options)
+            infer_obj.infer()
 
 
     def show_man_page(self):
