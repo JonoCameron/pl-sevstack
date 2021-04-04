@@ -6,7 +6,7 @@ with open(path.join(path.dirname(path.abspath(__file__)), 'README.rst')) as f:
 
 setup(
     name             = 'sevstack',
-    version          = '0.9',
+    version          = '0.11',
     description      = 'A ChRIS plugin to produce ranked list of severity scores',
     long_description = readme,
     author           = 'Jonathan Cameron',

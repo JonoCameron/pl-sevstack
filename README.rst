@@ -78,6 +78,11 @@ Run
 
 You need you need to specify input and output directories using the `-v` flag to `docker run`.
 
+.. code:: bash
+
+    docker run --rm -v $PWD/in:/incoming -v $PWD/out:/outgoing    \
+        jonocameron/pl-sevstack sevstack                         \
+               --imagefile ex-covid.jpeg /incoming /outgoing
 
 .. code:: bash
 

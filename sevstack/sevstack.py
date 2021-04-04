@@ -46,6 +46,7 @@ where necessary.)
             [--savejson <DIR>]                                          \\
             [-v <level>] [--verbosity <level>]                          \\
             [--version]                                                 \\
+            [--imagefile]                                               \\
             <inputDir>                                                  \\
             <outputDir> 
 
@@ -55,8 +56,8 @@ where necessary.)
 
             docker run --rm -u $(id -u)                             \
                 -v $(pwd)/in:/incoming -v $(pwd)/out:/outgoing      \
-                fnndsc/pl-sevstack sevstack                        \
-                /incoming /outgoing
+                jonocameron/pl-sevstack sevstack                        \
+                --imagefile sample.png /incoming /outgoing
 
     DESCRIPTION
 
@@ -84,6 +85,9 @@ where necessary.)
         
         [--version]
         If specified, print version number and exit. 
+
+        [--imagefile]
+        Image file needed to run analysis on.
 """
 
 
